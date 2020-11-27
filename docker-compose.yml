@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  app-a:
+    container_name: app-a
+    image: httpd:alpine
+    volumes:
+      - ./app-a:/usr/local/apache2/htdocs
+  app-b:
+    container_name: app-b
+    image: php:apache-buster
+    volumes:
+      - ./app-b:/var/www/html
+  site-c:
+    container_name: site-c
+    image: httpd:alpine
+    volumes:
+      - ./site-c:/usr/local/apache2/htdocs
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: nginx:alpine
+    volumes:
+      - ./nginx/conf.d/reverse-proxy.nginx.conf:/etc/nginx/conf.d/reverse-proxy.nginx.conf
+    ports:
+      - "80:80"
